@@ -1,0 +1,642 @@
+blueprint:
+  name: "IKEA BILRESA (Matter) - All-in-One: Buttons 1-3 (2/3 optional) + Scrollwheel je Button"
+  description: >
+    Ein Blueprint für alles (ohne Cover).
+    - Button 1 Pflicht, Button 2/3 optional
+    - Klicks: multi_press_1 / 2 / 3
+    - Hold: long_press bis long_release (optional pro Button, dimmt Ziellampe)
+    - Scrollwheel: je Button ein Rechts/Links Event Entity (optional für Button 2/3)
+  domain: automation
+  source_url: https://github.com/tomv79/ikea-bilresa-blueprints/blob/main/blueprints/automation/ikea_bilresa_all_in_one.yaml
+
+  input:
+    # ===== Button Event Entities =====
+    button1_event_entity:
+      name: Button 1 - Event Entity
+      selector:
+        entity:
+          domain: event
+
+    button2_event_entity:
+      name: Button 2 - Event Entity (optional)
+      default: ""
+      selector:
+        entity:
+          domain: event
+
+    button3_event_entity:
+      name: Button 3 - Event Entity (optional)
+      default: ""
+      selector:
+        entity:
+          domain: event
+
+    # ===== Scrollwheel Event Entities (je Button) =====
+    scrollwheel1_right_event_entity:
+      name: Scrollwheel Button 1 - Rechtsdrehung (Event Entity)
+      selector:
+        entity:
+          domain: event
+
+    scrollwheel1_left_event_entity:
+      name: Scrollwheel Button 1 - Linksdrehung (Event Entity)
+      selector:
+        entity:
+          domain: event
+
+    scrollwheel2_right_event_entity:
+      name: Scrollwheel Button 2 - Rechtsdrehung (optional)
+      default: ""
+      selector:
+        entity:
+          domain: event
+
+    scrollwheel2_left_event_entity:
+      name: Scrollwheel Button 2 - Linksdrehung (optional)
+      default: ""
+      selector:
+        entity:
+          domain: event
+
+    scrollwheel3_right_event_entity:
+      name: Scrollwheel Button 3 - Rechtsdrehung (optional)
+      default: ""
+      selector:
+        entity:
+          domain: event
+
+    scrollwheel3_left_event_entity:
+      name: Scrollwheel Button 3 - Linksdrehung (optional)
+      default: ""
+      selector:
+        entity:
+          domain: event
+
+    # ===== Target lights (je Button) =====
+    target_light_1:
+      name: Ziellampe Button 1 (Scroll + optional Hold)
+      selector:
+        entity:
+          domain: light
+
+    target_light_2:
+      name: Ziellampe Button 2 (optional)
+      default: ""
+      selector:
+        entity:
+          domain: light
+
+    target_light_3:
+      name: Ziellampe Button 3 (optional)
+      default: ""
+      selector:
+        entity:
+          domain: light
+
+    # ===== Button 1 actions + hold =====
+    b1_single_action:
+      name: Button 1 - 1x Klick Aktion
+      default: []
+      selector: { action: {} }
+
+    b1_double_action:
+      name: Button 1 - 2x Klick Aktion
+      default: []
+      selector: { action: {} }
+
+    b1_triple_action:
+      name: Button 1 - 3x Klick Aktion
+      default: []
+      selector: { action: {} }
+
+    b1_hold_enable:
+      name: Button 1 - Hold dimmt Ziellampe
+      default: true
+      selector: { boolean: {} }
+
+    b1_dim_step:
+      name: Button 1 - Hold Schritt (%)
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 25
+          step: 1
+          mode: slider
+          unit_of_measurement: "%"
+
+    b1_dim_direction:
+      name: Button 1 - Hold Richtung
+      default: brighten
+      selector:
+        select:
+          options: [brighten, dim]
+
+    b1_hold_interval_s:
+      name: Button 1 - Hold Intervall (Sek.)
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 5
+          step: 1
+          mode: slider
+          unit_of_measurement: "s"
+
+    # ===== Button 2 actions + hold =====
+    b2_single_action:
+      name: Button 2 - 1x Klick Aktion
+      default: []
+      selector: { action: {} }
+
+    b2_double_action:
+      name: Button 2 - 2x Klick Aktion
+      default: []
+      selector: { action: {} }
+
+    b2_triple_action:
+      name: Button 2 - 3x Klick Aktion
+      default: []
+      selector: { action: {} }
+
+    b2_hold_enable:
+      name: Button 2 - Hold dimmt Ziellampe
+      default: false
+      selector: { boolean: {} }
+
+    b2_dim_step:
+      name: Button 2 - Hold Schritt (%)
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 25
+          step: 1
+          mode: slider
+          unit_of_measurement: "%"
+
+    b2_dim_direction:
+      name: Button 2 - Hold Richtung
+      default: brighten
+      selector:
+        select:
+          options: [brighten, dim]
+
+    b2_hold_interval_s:
+      name: Button 2 - Hold Intervall (Sek.)
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 5
+          step: 1
+          mode: slider
+          unit_of_measurement: "s"
+
+    # ===== Button 3 actions + hold =====
+    b3_single_action:
+      name: Button 3 - 1x Klick Aktion
+      default: []
+      selector: { action: {} }
+
+    b3_double_action:
+      name: Button 3 - 2x Klick Aktion
+      default: []
+      selector: { action: {} }
+
+    b3_triple_action:
+      name: Button 3 - 3x Klick Aktion
+      default: []
+      selector: { action: {} }
+
+    b3_hold_enable:
+      name: Button 3 - Hold dimmt Ziellampe
+      default: false
+      selector: { boolean: {} }
+
+    b3_dim_step:
+      name: Button 3 - Hold Schritt (%)
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 25
+          step: 1
+          mode: slider
+          unit_of_measurement: "%"
+
+    b3_dim_direction:
+      name: Button 3 - Hold Richtung
+      default: brighten
+      selector:
+        select:
+          options: [brighten, dim]
+
+    b3_hold_interval_s:
+      name: Button 3 - Hold Intervall (Sek.)
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 5
+          step: 1
+          mode: slider
+          unit_of_measurement: "s"
+
+    # ===== Scrollwheel step settings je Button =====
+    scroll1_step_right:
+      name: Scrollwheel Button 1 - Schritt Rechts (% pro Tick)
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 20
+          step: 1
+          mode: slider
+          unit_of_measurement: "%"
+
+    scroll1_step_left:
+      name: Scrollwheel Button 1 - Schritt Links (% pro Tick)
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 20
+          step: 1
+          mode: slider
+          unit_of_measurement: "%"
+
+    scroll2_step_right:
+      name: Scrollwheel Button 2 - Schritt Rechts (% pro Tick)
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 20
+          step: 1
+          mode: slider
+          unit_of_measurement: "%"
+
+    scroll2_step_left:
+      name: Scrollwheel Button 2 - Schritt Links (% pro Tick)
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 20
+          step: 1
+          mode: slider
+          unit_of_measurement: "%"
+
+    scroll3_step_right:
+      name: Scrollwheel Button 3 - Schritt Rechts (% pro Tick)
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 20
+          step: 1
+          mode: slider
+          unit_of_measurement: "%"
+
+    scroll3_step_left:
+      name: Scrollwheel Button 3 - Schritt Links (% pro Tick)
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 20
+          step: 1
+          mode: slider
+          unit_of_measurement: "%"
+
+mode: queued
+max: 20
+
+trigger:
+  # ===== Buttons (optional-sicher via state_changed) =====
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input button1_event_entity
+    id: b1
+
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input button2_event_entity
+    id: b2
+
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input button3_event_entity
+    id: b3
+
+  # ===== Scrollwheel je Button (optional-sicher via state_changed) =====
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input scrollwheel1_right_event_entity
+    id: sw1r
+
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input scrollwheel1_left_event_entity
+    id: sw1l
+
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input scrollwheel2_right_event_entity
+    id: sw2r
+
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input scrollwheel2_left_event_entity
+    id: sw2l
+
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input scrollwheel3_right_event_entity
+    id: sw3r
+
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input scrollwheel3_left_event_entity
+    id: sw3l
+
+variables:
+  # ===== Target lights =====
+  t1: !input target_light_1
+  t2: !input target_light_2
+  t3: !input target_light_3
+
+  # ===== Button hold inputs =====
+  b1_hold: !input b1_hold_enable
+  b1_step: !input b1_dim_step
+  b1_dir: !input b1_dim_direction
+  b1_interval: !input b1_hold_interval_s
+
+  b2_hold: !input b2_hold_enable
+  b2_step: !input b2_dim_step
+  b2_dir: !input b2_dim_direction
+  b2_interval: !input b2_hold_interval_s
+
+  b3_hold: !input b3_hold_enable
+  b3_step: !input b3_dim_step
+  b3_dir: !input b3_dim_direction
+  b3_interval: !input b3_hold_interval_s
+
+  # ===== Scroll steps =====
+  sw1r_step: !input scroll1_step_right
+  sw1l_step: !input scroll1_step_left
+  sw2r_step: !input scroll2_step_right
+  sw2l_step: !input scroll2_step_left
+  sw3r_step: !input scroll3_step_right
+  sw3l_step: !input scroll3_step_left
+
+  # ===== event_type + press_count aus state_changed payload =====
+  event_type: >-
+    {% set ns = trigger.event.data.new_state if trigger.event and trigger.event.data is defined else none %}
+    {{ ns.attributes.event_type | default('') if ns is not none else '' }}
+
+  press_count: >-
+    {% set ns = trigger.event.data.new_state if trigger.event and trigger.event.data is defined else none %}
+    {{ (ns.attributes.totalNumberOfPressesCounted | int(1)) if ns is not none else 1 }}
+
+action:
+  - choose:
+
+      # ==========================================================
+      # Button 1 Klicks
+      # ==========================================================
+      - conditions:
+          - condition: trigger
+            id: b1
+          - condition: template
+            value_template: "{{ event_type == 'multi_press_1' }}"
+        sequence: !input b1_single_action
+
+      - conditions:
+          - condition: trigger
+            id: b1
+          - condition: template
+            value_template: "{{ event_type == 'multi_press_2' }}"
+        sequence: !input b1_double_action
+
+      - conditions:
+          - condition: trigger
+            id: b1
+          - condition: template
+            value_template: "{{ event_type == 'multi_press_3' }}"
+        sequence: !input b1_triple_action
+
+      # Button 1 Hold dim
+      - conditions:
+          - condition: trigger
+            id: b1
+          - condition: template
+            value_template: "{{ event_type == 'long_press' and b1_hold }}"
+        sequence:
+          - repeat:
+              sequence:
+                - service: light.turn_on
+                  target:
+                    entity_id: !input target_light_1
+                  data:
+                    brightness_step_pct: "{{ (b1_step | int) * (1 if b1_dir == 'brighten' else -1) }}"
+                - wait_for_trigger:
+                    - platform: event
+                      event_type: state_changed
+                      event_data:
+                        entity_id: !input button1_event_entity
+                  timeout:
+                    seconds: "{{ b1_interval | int }}"
+                  continue_on_timeout: true
+              until:
+                - condition: template
+                  value_template: >-
+                    {% set ns = wait.trigger.event.data.new_state if wait.trigger else none %}
+                    {{ ns is not none and (ns.attributes.event_type | default('')) == 'long_release' }}
+
+      # ==========================================================
+      # Button 2 Klicks (optional)
+      # ==========================================================
+      - conditions:
+          - condition: trigger
+            id: b2
+          - condition: template
+            value_template: "{{ event_type == 'multi_press_1' }}"
+        sequence: !input b2_single_action
+
+      - conditions:
+          - condition: trigger
+            id: b2
+          - condition: template
+            value_template: "{{ event_type == 'multi_press_2' }}"
+        sequence: !input b2_double_action
+
+      - conditions:
+          - condition: trigger
+            id: b2
+          - condition: template
+            value_template: "{{ event_type == 'multi_press_3' }}"
+        sequence: !input b2_triple_action
+
+      # Button 2 Hold dim (optional)
+      - conditions:
+          - condition: trigger
+            id: b2
+          - condition: template
+            value_template: "{{ event_type == 'long_press' and b2_hold and t2 != '' }}"
+        sequence:
+          - repeat:
+              sequence:
+                - service: light.turn_on
+                  data:
+                    entity_id: "{{ t2 }}"
+                    brightness_step_pct: "{{ (b2_step | int) * (1 if b2_dir == 'brighten' else -1) }}"
+                - wait_for_trigger:
+                    - platform: event
+                      event_type: state_changed
+                      event_data:
+                        entity_id: !input button2_event_entity
+                  timeout:
+                    seconds: "{{ b2_interval | int }}"
+                  continue_on_timeout: true
+              until:
+                - condition: template
+                  value_template: >-
+                    {% set ns = wait.trigger.event.data.new_state if wait.trigger else none %}
+                    {{ ns is not none and (ns.attributes.event_type | default('')) == 'long_release' }}
+
+      # ==========================================================
+      # Button 3 Klicks (optional)
+      # ==========================================================
+      - conditions:
+          - condition: trigger
+            id: b3
+          - condition: template
+            value_template: "{{ event_type == 'multi_press_1' }}"
+        sequence: !input b3_single_action
+
+      - conditions:
+          - condition: trigger
+            id: b3
+          - condition: template
+            value_template: "{{ event_type == 'multi_press_2' }}"
+        sequence: !input b3_double_action
+
+      - conditions:
+          - condition: trigger
+            id: b3
+          - condition: template
+            value_template: "{{ event_type == 'multi_press_3' }}"
+        sequence: !input b3_triple_action
+
+      # Button 3 Hold dim (optional)
+      - conditions:
+          - condition: trigger
+            id: b3
+          - condition: template
+            value_template: "{{ event_type == 'long_press' and b3_hold and t3 != '' }}"
+        sequence:
+          - repeat:
+              sequence:
+                - service: light.turn_on
+                  data:
+                    entity_id: "{{ t3 }}"
+                    brightness_step_pct: "{{ (b3_step | int) * (1 if b3_dir == 'brighten' else -1) }}"
+                - wait_for_trigger:
+                    - platform: event
+                      event_type: state_changed
+                      event_data:
+                        entity_id: !input button3_event_entity
+                  timeout:
+                    seconds: "{{ b3_interval | int }}"
+                  continue_on_timeout: true
+              until:
+                - condition: template
+                  value_template: >-
+                    {% set ns = wait.trigger.event.data.new_state if wait.trigger else none %}
+                    {{ ns is not none and (ns.attributes.event_type | default('')) == 'long_release' }}
+
+      # ==========================================================
+      # Scrollwheel Button 1
+      # ==========================================================
+      - conditions:
+          - condition: trigger
+            id: sw1r
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: !input target_light_1
+            data:
+              brightness_step_pct: "{{ (sw1r_step | int(5)) * (press_count | int(1)) }}"
+
+      - conditions:
+          - condition: trigger
+            id: sw1l
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: !input target_light_1
+            data:
+              brightness_step_pct: "{{ -1 * (sw1l_step | int(5)) * (press_count | int(1)) }}"
+
+      # ==========================================================
+      # Scrollwheel Button 2 (optional)
+      # ==========================================================
+      - conditions:
+          - condition: trigger
+            id: sw2r
+          - condition: template
+            value_template: "{{ t2 != '' }}"
+        sequence:
+          - service: light.turn_on
+            data:
+              entity_id: "{{ t2 }}"
+              brightness_step_pct: "{{ (sw2r_step | int(5)) * (press_count | int(1)) }}"
+
+      - conditions:
+          - condition: trigger
+            id: sw2l
+          - condition: template
+            value_template: "{{ t2 != '' }}"
+        sequence:
+          - service: light.turn_on
+            data:
+              entity_id: "{{ t2 }}"
+              brightness_step_pct: "{{ -1 * (sw2l_step | int(5)) * (press_count | int(1)) }}"
+
+      # ==========================================================
+      # Scrollwheel Button 3 (optional)
+      # ==========================================================
+      - conditions:
+          - condition: trigger
+            id: sw3r
+          - condition: template
+            value_template: "{{ t3 != '' }}"
+        sequence:
+          - service: light.turn_on
+            data:
+              entity_id: "{{ t3 }}"
+              brightness_step_pct: "{{ (sw3r_step | int(5)) * (press_count | int(1)) }}"
+
+      - conditions:
+          - condition: trigger
+            id: sw3l
+          - condition: template
+            value_template: "{{ t3 != '' }}"
+        sequence:
+          - service: light.turn_on
+            data:
+              entity_id: "{{ t3 }}"
+              brightness_step_pct: "{{ -1 * (sw3l_step | int(5)) * (press_count | int(1)) }}"
+
+    default: []
